@@ -4,7 +4,7 @@
 > **Aturan update:** setiap kali pengguna melaporkan progres, keputusan, atau perubahan, perbarui bagian **Status Terkini** dan tambahkan satu baris di **Changelog** (paling atas = terbaru). Jangan menghapus riwayat. Jangan menulis fakta yang belum dikonfirmasi pengguna; tandai dengan `[BELUM DIKONFIRMASI]`.
 > **Bahasa:** pengguna berkomunikasi dalam Bahasa Indonesia (campur istilah teknis Inggris). Balas dalam bahasa yang dipakai pengguna. Laporan ditulis dalam Bahasa Indonesia akademik.
 
-Terakhir diperbarui: 2026-11-21
+Terakhir diperbarui: 2026-11-24
 
 ---
 
@@ -113,15 +113,18 @@ Data tambahan: uji 400 user di JMeter = 20.000 sampel, error 0%, rata-rata respo
 - **Sedang dikerjakan:** pengguna menyusun konteks proyek ini dan melanjutkan tugas Komputasi Awan (simulasi IaaS, PaaS, SaaS).
 - **Sudah selesai (draf):** laporan IaaS (Tugas 1); laporan Docker Bagian A dan B (Tugas 2).
 - **Dokumen pendukung baru:** `PROSEDUR_AKSES.md` berisi prosedur akses Proxmox (lokal dan publik via tunnel), VM Debian (SSH/konsol), web via Cloudflare Tunnel, `web1`/`web2`, Portainer, Prometheus, Grafana, dan JMeter; kredensial sengaja tidak ditulis. Beberapa alamat/akun ditandai `[BELUM DIKONFIRMASI]`.
+- **Prompt onboarding (2026-11-24):** `PROMPT_ONBOARDING.md` berisi instruksi siap pakai untuk orang/agen yang baru clone repo: urutan membaca, ringkasan konteks, aturan kerja, dan format jawaban awal.
 - **Progres terbaru (2026-11-21):** connector Cloudflare dipasang di host Proxmox, tunnel berstatus HEALTHY, Public Hostname `proxmox.kelompok3ccg.dpdns.org` dibuat dan DNS Proxied. Akses web masih terkendala `ERR_TOO_MANY_REDIRECTS`; dugaan Service Public Hostname masih `HTTP`. Pengguna memilih **tanpa Cloudflare Access**, cukup kata sandi administrator yang kuat.
 - **Catatan akun:** `sammi01` hanya untuk VM Debian; host Proxmox memakai akun administrator (default `root`). Upaya SSH dengan `sammi01` menghasilkan `Permission denied`.
-- **Berikutnya:** ubah Service Public Hostname Proxmox ke `HTTPS localhost:8006` + No TLS Verify, pastikan mode SSL/TLS bukan Flexible, lalu uji dari luar jaringan. Setelah itu baru revisi laporan/PaaS/SaaS.
+- **Update 2026-11-24:** pengguna sudah mengubah Service Type Public Hostname menjadi `HTTPS`. `[BELUM DIKONFIRMASI: No TLS Verify, mode SSL/TLS, dan hasil uji akses akhir]`
+- **Berikutnya:** pastikan No TLS Verify aktif dan mode SSL/TLS bukan Flexible, lalu uji dari luar jaringan. Setelah itu baru revisi laporan/PaaS/SaaS.
 - **Deadline:** `[BELUM DIKONFIRMASI]`
 
 ---
 
 ## 7. Changelog (terbaru di atas)
 
+- 2026-11-24 — Prompt onboarding dibuat untuk orang/agen yang baru clone repository; status update Service Type Proxmox juga dicatat | file terdampak: `PROMPT_ONBOARDING.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: konfirmasi hasil uji akses Proxmox dari luar jaringan
 - 2026-11-21 — Tunnel khusus Proxmox aktif (connector di host, HEALTHY) dan Public Hostname proxied; akses web terkendala redirect loop, panduan perbaikan dan prosedur publik ditambahkan | file terdampak: `PROSEDUR_AKSES.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: Service → HTTPS + No TLS Verify, cek mode SSL/TLS, uji dari luar jaringan
 - 2026-11-21 — Dokumen `PROSEDUR_AKSES.md` dibuat untuk prosedur akses seluruh komponen IaaS dan Docker/Portainer/monitoring | file terdampak: `PROSEDUR_AKSES.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: konfirmasi IP Proxmox, hostname publik VM 100/101, serta kredensial Layanan
 - 2026-11-21 — File konteks dibuat dari dua laporan: laporan IaaS (UTS) dan laporan Docker (tugas asinkronus).
