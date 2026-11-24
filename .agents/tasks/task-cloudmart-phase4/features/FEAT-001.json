@@ -1,0 +1,27 @@
+{
+  "id": "FEAT-001",
+  "type": "fix",
+  "description": "Fix backend configuration and API response shapes. Three changes: (1) add DATABASE_URL and CORS_ORIGIN to .env.example and env.ts; (2) reshape product list response to { data: Product[], pagination: {...} }; (3) reshape admin orders response similarly; (4) fix AdminStats field names and add recentOrders to stats endpoint.",
+  "status": "pending",
+  "steps": [
+    "Edit d:/Tugas Kuliah/UAS-CC/.env.example — add two lines: DATABASE_URL=postgresql://cloudmart:changeme_strong_password@localhost:5432/cloudmart_db and CORS_ORIGIN=http://localhost:5173",
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/config/env.ts — add CORS_ORIGIN to the Zod schema as optional string with default 'http://localhost:5173', export it",
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/app.ts — replace process.env.CORS_ORIGIN || 'http://localhost:5173' with the imported env.CORS_ORIGIN from config/env",
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/controllers/product.controller.ts list() — reshape response: return { success: true, data: data.data, pagination: { page: data.page, limit: data.limit, total: data.total, totalPages: data.totalPages } }",
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/controllers/admin.controller.ts listOrders() — same pagination reshape pattern for the admin orders list",
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/services/admin.service.ts getStats() — rename returned keys to totalRevenue/totalOrders/totalProducts/totalCustomers; add a 5th parallel query for recentOrders (last 5 orders including items and payment); return recentOrders in the result object",
+    "Run: cd backend && npx tsc --noEmit to confirm 0 TypeScript errors"
+  ],
+  "acceptance_criteria": [
+    "cd backend && npx tsc --noEmit exits with code 0",
+    ".env.example contains DATABASE_URL and CORS_ORIGIN lines",
+    "product.controller.ts list() returns { success, data: Product[], pagination: { page, limit, total, totalPages } }",
+    "admin.controller.ts listOrders() returns { success, data: Order[], pagination: {...} }",
+    "admin.service.ts getStats() returns object with keys totalRevenue, totalOrders, totalProducts, totalCustomers, recentOrders"
+  ],
+  "verification": [
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\backend\" && npx tsc --noEmit"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

@@ -1,0 +1,34 @@
+{
+  "id": "FEAT-004",
+  "type": "docs",
+  "description": "Create all required documentation files. This FEAT is independent of FEAT-001/002/003 in terms of file conflicts, but should run after them so docs reflect the fixed codebase. Creates docs/ directory and 5 markdown files: DATABASE.md, API.md, TESTING.md, ARCHITECTURE.md, ACADEMIC_EVIDENCE.md. Also updates README.md and PROJECT_CONTEXT.md.",
+  "status": "pending",
+  "steps": [
+    "Create directory d:/Tugas Kuliah/UAS-CC/docs/ if it doesn't exist",
+    "Create d:/Tugas Kuliah/UAS-CC/docs/DATABASE.md — include: schema overview with all 13 tables (users, roles/enums, products, categories, carts, cart_items, orders, order_items, payments, addresses, inventory, activity_logs, deployment_logs), relationships (FK diagram in text), Prisma migrate vs db push evaluation (recommend migrate dev for production, db push for development/UAS demo), seeding instructions with seed credentials, how to reset the database",
+    "Create d:/Tugas Kuliah/UAS-CC/docs/API.md — document all 29 endpoints grouped by route prefix: /api/auth (register, login, me, logout), /api/products (list with pagination, getOne), /api/categories (list), /api/cart (get, addItem, updateItem, removeItem), /api/orders (create with addressData, list, getOne), /api/users (getProfile, updateProfile), /api/admin/stats, /api/admin/orders (list paginated, updateStatus), /api/admin/users (list), /api/admin/products (list, create, update, delete), /api/admin/categories (list, create, update, delete), /api/infrastructure/status. For each endpoint: method, path, auth requirement, request body shape, response shape.",
+    "Create d:/Tugas Kuliah/UAS-CC/docs/TESTING.md — include: manual test checklist for all 14 acceptance criteria, the curl commands for the 12 API smoke tests from phase4-plan.md, instructions to run backend typecheck and frontend build as automated verification, expected outputs for each test.",
+    "Create d:/Tugas Kuliah/UAS-CC/docs/ARCHITECTURE.md — include: text-art system diagram (browser → nginx → backend/frontend → postgres), technology stack table (React/TypeScript/Vite/TailwindCSS for frontend; Express/TypeScript/Prisma/PostgreSQL for backend; Nginx reverse proxy; Docker Compose for orchestration), cloud model mapping (this app IS the SaaS layer running on the PaaS Docker layer running on the IaaS Proxmox layer), data flow description for the main user flows (login, browse products, add to cart, checkout).",
+    "Create d:/Tugas Kuliah/UAS-CC/docs/ACADEMIC_EVIDENCE.md — include: SaaS demonstration scenario for UAS presentation, step-by-step demo script (5 steps: show homepage, show catalog with filter, show cart + checkout flow, show order confirmation, show admin dashboard), screenshot guide (which screens to capture), evaluation criteria mapping to Phase 4 acceptance criteria, cloud model analysis (how CloudMart demonstrates SaaS on top of PaaS/IaaS infrastructure).",
+    "Edit d:/Tugas Kuliah/UAS-CC/README.md — add section 'API Response Format' explaining the pagination shape { data: T[], pagination: { page, limit, total, totalPages } }; ensure seed credentials table is accurate; add note about the docs/ directory.",
+    "Edit d:/Tugas Kuliah/UAS-CC/PROJECT_CONTEXT.md — update Status Terkini: Phase 4 selesai, all bugs fixed, full stack verified; add changelog entry for Phase 4 completion with files affected."
+  ],
+  "acceptance_criteria": [
+    "docs/DATABASE.md exists and covers all 13 tables",
+    "docs/API.md exists and documents all 29 endpoints",
+    "docs/TESTING.md exists with 14 acceptance criteria checklist and curl commands",
+    "docs/ARCHITECTURE.md exists with system diagram and cloud model mapping",
+    "docs/ACADEMIC_EVIDENCE.md exists with UAS demo scenario",
+    "README.md updated with API response format note",
+    "PROJECT_CONTEXT.md updated with Phase 4 status and changelog entry"
+  ],
+  "verification": [
+    "Test-Path 'd:\\Tugas Kuliah\\UAS-CC\\docs\\DATABASE.md'",
+    "Test-Path 'd:\\Tugas Kuliah\\UAS-CC\\docs\\API.md'",
+    "Test-Path 'd:\\Tugas Kuliah\\UAS-CC\\docs\\TESTING.md'",
+    "Test-Path 'd:\\Tugas Kuliah\\UAS-CC\\docs\\ARCHITECTURE.md'",
+    "Test-Path 'd:\\Tugas Kuliah\\UAS-CC\\docs\\ACADEMIC_EVIDENCE.md'"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

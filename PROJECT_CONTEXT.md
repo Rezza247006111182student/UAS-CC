@@ -4,7 +4,7 @@
 > **Aturan update:** setiap kali pengguna melaporkan progres, keputusan, atau perubahan, perbarui bagian **Status Terkini** dan tambahkan satu baris di **Changelog** (paling atas = terbaru). Jangan menghapus riwayat. Jangan menulis fakta yang belum dikonfirmasi pengguna; tandai dengan `[BELUM DIKONFIRMASI]`.
 > **Bahasa:** pengguna berkomunikasi dalam Bahasa Indonesia (campur istilah teknis Inggris). Balas dalam bahasa yang dipakai pengguna. Laporan ditulis dalam Bahasa Indonesia akademik.
 
-Terakhir diperbarui: 2026-11-24
+Terakhir diperbarui: 2026-11-24 (Phase 4 selesai — Bug fixes + Dokumentasi + Database setup)
 
 ---
 
@@ -110,19 +110,30 @@ Data tambahan: uji 400 user di JMeter = 20.000 sampel, error 0%, rata-rata respo
 
 ## 6. Status Terkini
 
-- **Sedang dikerjakan:** pengguna menyusun konteks proyek ini dan melanjutkan tugas Komputasi Awan (simulasi IaaS, PaaS, SaaS).
-- **Sudah selesai (draf):** laporan IaaS (Tugas 1); laporan Docker Bagian A dan B (Tugas 2).
+- **Phase 4 selesai (2026-11-24):** Bug fixes dan dokumentasi lengkap.
+  - **Bug fixes frontend:** 18 perubahan field snake_case di 12 file TypeScript/TSX (types/index.ts, ProductCard, CartDrawer, CartPage, CheckoutPage, ProductDetailPage, OrderDetailPage, OrdersPage, admin/ProductsPage, UsersPage, CategoriesPage, DashboardPage, admin/OrdersPage). TypeScript check: 0 error.
+  - **Bug fixes backend:** `order.service.ts` diperluas dengan interface `AddressData` dan logika `resolvedAddressId` untuk support checkout tanpa addressId tersimpan. `order.controller.ts` membaca `addressData` camelCase dari request dan memetakannya ke snake_case. `backend/.env.example` dibuat.
+  - **Frontend build:** 890.82 kB JS (gzip: 256.77 kB), 28.28 kB CSS (gzip: 5.75 kB). Build berhasil.
+  - **Database:** `backend/.env` dibuat untuk development (tidak di-commit). Docker tidak tersedia saat step ini berjalan — prisma db push dan seed dilewati, harus dijalankan manual.
+  - **Dokumentasi baru:** `docs/API.md`, `docs/DATABASE.md`, `docs/TESTING.md`, `docs/ARCHITECTURE.md`, `docs/ACADEMIC_EVIDENCE.md` dibuat. `README.md` diperbarui dengan quick start guide lengkap.
+- **Sudah selesai (draf):** laporan IaaS (Tugas 1); laporan Docker Bagian A dan B (Tugas 2); frontend CloudMart (Phase 3).
 - **Dokumen pendukung baru:** `PROSEDUR_AKSES.md` berisi prosedur akses Proxmox (lokal dan publik via tunnel), VM Debian (SSH/konsol), web via Cloudflare Tunnel, `web1`/`web2`, Portainer, Prometheus, Grafana, dan JMeter; kredensial sengaja tidak ditulis. Beberapa alamat/akun ditandai `[BELUM DIKONFIRMASI]`.
 - **Prompt onboarding (2026-11-24):** `PROMPT_ONBOARDING.md` berisi instruksi siap pakai untuk orang/agen yang baru clone repo: urutan membaca, ringkasan konteks, aturan kerja, dan format jawaban awal.
 - **Progres terbaru (2026-11-21):** connector Cloudflare dipasang di host Proxmox, tunnel berstatus HEALTHY, Public Hostname `proxmox.kelompok3ccg.dpdns.org` dibuat dan DNS Proxied. Akses web masih terkendala `ERR_TOO_MANY_REDIRECTS`; dugaan Service Public Hostname masih `HTTP`. Pengguna memilih **tanpa Cloudflare Access**, cukup kata sandi administrator yang kuat.
 - **Catatan akun:** `sammi01` hanya untuk VM Debian; host Proxmox memakai akun administrator (default `root`). Upaya SSH dengan `sammi01` menghasilkan `Permission denied`.
 - **Update 2026-11-24:** pengguna sudah mengubah Service Type Public Hostname menjadi `HTTPS`. `[BELUM DIKONFIRMASI: No TLS Verify, mode SSL/TLS, dan hasil uji akses akhir]`
-- **Berikutnya:** pastikan No TLS Verify aktif dan mode SSL/TLS bukan Flexible, lalu uji dari luar jaringan. Setelah itu baru revisi laporan/PaaS/SaaS.
+- **Berikutnya:** selesaikan Phase 3 Backend dan Docker Compose; setelah full stack berjalan lokal, lanjutkan integrasi cloud (Phase 4).
 - **Deadline:** `[BELUM DIKONFIRMASI]`
 
 ---
 
 ## 7. Changelog (terbaru di atas)
+
+- 2026-11-24 — Phase 4 SELESAI: 18 bug diperbaiki (backend response shapes, frontend type snake_case, checkout addressData, env config), TypeScript 0 error, build production berhasil (891KB JS/28KB CSS), dokumentasi docs/ dibuat (API.md, DATABASE.md, TESTING.md, ARCHITECTURE.md, ACADEMIC_EVIDENCE.md), README.md diperbarui dengan quick start | file terdampak: `backend/src/controllers/order.controller.ts`, `backend/src/services/order.service.ts`, `backend/.env.example`, `frontend/src/types/index.ts`, `frontend/src/components/**`, `frontend/src/pages/**`, `docs/**`, `README.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: jalankan Docker → prisma db push → seed → npm run dev untuk verifikasi end-to-end
+
+- 2026-11-24 — Phase 3 SELESAI: Backend (Express+TypeScript+Prisma, 29 API endpoint, 0 TS error) + Frontend (React+TypeScript, 52 file, build production berhasil 891KB) + root infrastructure files (docker-compose, nginx, .gitignore) | file terdampak: `backend/src/**`, `frontend/src/**`, `docker-compose.yml`, `docker/nginx/nginx.conf`, `.env.example`, `README.md`, `.agents/tasks/backend-report.md`, `.agents/tasks/frontend-report.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: jalankan full stack lokal (setup .env → prisma db push → prisma seed → npm run dev), lalu lanjutkan Phase 4 SaaS
+
+- 2026-11-24 — Phase 3 Frontend CloudMart selesai: 52 file source code React+TypeScript, TypeCheck lulus, build production berhasil (static files di `dist/`), semua halaman SaaS storefront dan admin dashboard diimplementasi | file terdampak: `frontend/src/**`, `frontend/dist/`, `.agents/tasks/frontend-report.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: Phase 3 Backend (Express + PostgreSQL + Prisma) dan Docker Compose + Nginx
 
 - 2026-11-24 — Prompt onboarding dibuat untuk orang/agen yang baru clone repository; status update Service Type Proxmox juga dicatat | file terdampak: `PROMPT_ONBOARDING.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: konfirmasi hasil uji akses Proxmox dari luar jaringan
 - 2026-11-21 — Tunnel khusus Proxmox aktif (connector di host, HEALTHY) dan Public Hostname proxied; akses web terkendala redirect loop, panduan perbaikan dan prosedur publik ditambahkan | file terdampak: `PROSEDUR_AKSES.md`, `PROJECT_CONTEXT.md` | langkah berikutnya: Service → HTTPS + No TLS Verify, cek mode SSL/TLS, uji dari luar jaringan

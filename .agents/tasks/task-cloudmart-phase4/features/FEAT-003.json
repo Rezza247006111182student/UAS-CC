@@ -1,0 +1,33 @@
+{
+  "id": "FEAT-003",
+  "type": "fix",
+  "description": "Fix all frontend type definitions and every component that accesses the renamed snake_case fields. The core problem: frontend/src/types/index.ts defines interfaces in camelCase but Prisma/backend returns snake_case. This causes all field accesses to return undefined at runtime. This FEAT depends on FEAT-001 and FEAT-002 being complete (so backend types are finalized). Update types/index.ts first, then fix all 12 component/page files that access the changed fields.",
+  "status": "pending",
+  "steps": [
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/types/index.ts — replace all camelCase field names with snake_case to match Prisma output: User: isActive→is_active, createdAt→created_at; Category: imageUrl→image_url, isActive→is_active; Product: categoryId→category_id, images→image_urls, isActive→is_active, createdAt→created_at; nested Product.inventory: reservedQuantity→reserved_quantity; CartItem: cartId→cart_id, productId→product_id, priceAtAdd→price_at_add; Cart: userId→user_id, updatedAt→updated_at; Address: remove label field (not in schema), recipientName→recipient_name, postalCode→postal_code, isDefault→is_default; OrderItem: productId→product_id, unitPrice→unit_price; Payment: referenceCode→reference_code, paidAt→paid_at; Order: shippingCost→shipping_cost, createdAt→created_at. Keep AdminStats with totalRevenue/totalOrders/totalProducts/totalCustomers/recentOrders (matches backend after FEAT-001 fix).",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/components/product/ProductCard.tsx — product.images→product.image_urls (1 occurrence in src attribute and 1 in length check), product.inventory.reservedQuantity→product.inventory.reserved_quantity",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/components/cart/CartDrawer.tsx — item.product.images?.[0]→item.product.image_urls?.[0], item.priceAtAdd→item.price_at_add (2 occurrences: in p tag display and in total reduction)",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/storefront/CartPage.tsx — item.product.images?.[0]→item.product.image_urls?.[0], item.priceAtAdd→item.price_at_add (3 occurrences: subtotal reduce, display text, bold total calculation)",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/storefront/CheckoutPage.tsx — item.product.images?.[0]→item.product.image_urls?.[0], item.priceAtAdd→item.price_at_add (4 occurrences: subtotal reduce, display price text, subtotal display, total display)",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/storefront/ProductDetailPage.tsx — const images = product.images→product.image_urls (1 occurrence), product.inventory.reservedQuantity→product.inventory.reserved_quantity",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/storefront/OrderDetailPage.tsx — order.shippingCost→order.shipping_cost, order.createdAt→order.created_at (in formatDate call), order.payment.referenceCode→order.payment.reference_code, order.payment.paidAt→order.payment.paid_at, order.address.recipientName→order.address.recipient_name, order.address.postalCode→order.address.postal_code, item.unitPrice→item.unit_price (in formatCurrency call)",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/storefront/OrdersPage.tsx — order.createdAt→order.created_at (in formatDate call)",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/admin/ProductsPage.tsx — in openEdit: product.categoryId→product.category_id, product.images[0]→product.image_urls[0]; in table row render: product.images[0]→product.image_urls[0], product.isActive→product.is_active; in handleSubmit payload: change key categoryId→category_id, images→image_urls",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/admin/UsersPage.tsx — user.isActive→user.is_active, user.createdAt→user.created_at",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/admin/CategoriesPage.tsx — cat.isActive→cat.is_active",
+    "Edit d:/Tugas Kuliah/UAS-CC/frontend/src/pages/admin/DashboardPage.tsx — order.createdAt→order.created_at",
+    "Run: cd frontend && npm run typecheck to confirm 0 TypeScript errors",
+    "Run: cd frontend && npm run build to confirm production build succeeds"
+  ],
+  "acceptance_criteria": [
+    "cd frontend && npm run typecheck exits with code 0",
+    "cd frontend && npm run build exits with code 0 and produces dist/ files",
+    "All field accesses in components match the snake_case names from Prisma schema"
+  ],
+  "verification": [
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\frontend\" && npm run typecheck",
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\frontend\" && npm run build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

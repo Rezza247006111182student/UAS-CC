@@ -1,0 +1,30 @@
+{
+  "id": "FEAT-005",
+  "type": "chore",
+  "description": "Integration verification: run full backend + frontend typecheck and build after all previous FEATs complete, record results. This FEAT depends on FEAT-001, FEAT-002, FEAT-003 (code fixes). It does NOT start Docker or run the database — it only verifies TypeScript compilation and frontend build, which are the automated verification criteria required by the task. Record all results in the FEAT findings field.",
+  "status": "pending",
+  "steps": [
+    "Install backend dependencies if node_modules is missing: cd backend && npm install",
+    "Install frontend dependencies if node_modules is missing: cd frontend && npm install",
+    "Run backend typecheck: cd backend && npx tsc --noEmit — capture output, confirm 0 errors",
+    "Run frontend typecheck: cd frontend && npm run typecheck — capture output, confirm 0 errors",
+    "Run frontend production build: cd frontend && npm run build — capture output, confirm build succeeds",
+    "Record all command outputs and exit codes in this FEAT's findings field",
+    "If any command fails: read the error, identify the file and line, fix the TypeScript error (do not introduce new logic — only fix type compatibility), re-run the failing command",
+    "After all three commands pass: set FEAT status to completed and record final results in findings"
+  ],
+  "acceptance_criteria": [
+    "cd backend && npx tsc --noEmit exits with code 0",
+    "cd frontend && npm run typecheck exits with code 0",
+    "cd frontend && npm run build exits with code 0",
+    "frontend/dist/ directory exists and contains index.html and assets/"
+  ],
+  "verification": [
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\backend\" && npx tsc --noEmit",
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\frontend\" && npm run typecheck",
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\frontend\" && npm run build",
+    "Test-Path 'd:\\Tugas Kuliah\\UAS-CC\\frontend\\dist\\index.html'"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

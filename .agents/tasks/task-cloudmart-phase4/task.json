@@ -1,0 +1,7 @@
+{
+  "task_id": "task-cloudmart-phase4",
+  "task_description": "Phase 4 of CloudMart: fix 12 confirmed bugs from Phase 3 audit (field name mismatches, response shape mismatches, missing addressData handling, AdminStats field names, admin product payload), verify full stack runs end-to-end, and create all required documentation.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004", "FEAT-005"],
+  "blocked_reason": null
+}

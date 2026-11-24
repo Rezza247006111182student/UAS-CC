@@ -1,0 +1,22 @@
+{
+  "id": "FEAT-002",
+  "type": "fix",
+  "description": "Fix backend order creation to handle inline addressData from checkout. The frontend sends addressData: { recipientName, phone, street, city, province, postalCode } but the backend only reads addressId. This FEAT extends the order service and controller to accept addressData, map camelCase fields to snake_case, create an Address record inside the transaction, and use the new address ID on the order. FEAT-002 is independent of FEAT-001 (different files). Both should complete before FEAT-003.",
+  "status": "pending",
+  "steps": [
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/services/order.service.ts — add AddressData interface with fields recipient_name, phone, street, city, province, postal_code; extend CreateOrderInput to include addressData?: AddressData; inside createOrder(), before the $transaction, resolve address: if addressId provided use it, else if addressData provided create Address record inside the tx and use its id; replace hardcoded input.addressId with resolvedAddressId",
+    "Edit d:/Tugas Kuliah/UAS-CC/backend/src/controllers/order.controller.ts createOrder() — destructure addressData from req.body; map camelCase frontend fields to snake_case: { recipient_name: req.body.addressData?.recipientName, phone: req.body.addressData?.phone, street: req.body.addressData?.street, city: req.body.addressData?.city, province: req.body.addressData?.province, postal_code: req.body.addressData?.postalCode }; pass mapped addressData to orderService.createOrder",
+    "Run: cd backend && npx tsc --noEmit to confirm 0 errors"
+  ],
+  "acceptance_criteria": [
+    "cd backend && npx tsc --noEmit exits with code 0",
+    "order.service.ts CreateOrderInput has addressData field",
+    "order.service.ts creates an Address record inside $transaction when addressData is provided and addressId is absent",
+    "order.controller.ts maps addressData from camelCase (frontend) to snake_case (service)"
+  ],
+  "verification": [
+    "cd \"d:\\Tugas Kuliah\\UAS-CC\\backend\" && npx tsc --noEmit"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
